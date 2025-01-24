@@ -1,6 +1,6 @@
 function AppFooter() {
     return (
-        <h1>Movie footer</h1>
+        <h4>Movie footer</h4>
     )
 }
 

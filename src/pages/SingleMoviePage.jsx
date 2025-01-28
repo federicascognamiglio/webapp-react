@@ -4,16 +4,39 @@ import { useParams } from "react-router-dom";
 import ReviewCard from "../components/ReviewCard";
 import ReviewForm from "../components/ReviewForm";
 
+// Initial formData
+const initialFormData = {
+    name: "",
+    vote: 0,
+    text: ""
+}
+
 function SingleMoviePage() {
     const url = import.meta.env.VITE_URL;
     const { id } = useParams();
     const [movie, setMovie] = useState([]);
+    // Form data state
+    const [formData, setFormData] = useState(initialFormData);
 
-    useEffect(() => {
+    const getMovie = () => {
         axios.get(`${url}/movies/${id}`).then((resp) => {
             setMovie(resp.data.data)
         })
+    }
+
+    // Get Movie
+    useEffect(() => {
+       getMovie()
     }, [])
+
+    // Send newData to DB on form submit
+    const storeReview = (formData) => {
+        axios.post(`${url}/movies/${movie.id}/reviews`, formData).then(resp => {
+            setFormData(initialValues)
+            getMovie()
+        })
+    }
+ 
 
     return (
         <>
@@ -31,7 +54,11 @@ function SingleMoviePage() {
                         <p className="card-text">{`Released in: ${curMovie.release_year}`}</p>
                         <p className="card-text">{curMovie.abstract}</p>
                         <div>
-                            <ReviewForm />
+                            <ReviewForm 
+                            data={formData}
+                            setData={setFormData}
+                            sendSubmit={storeReview}
+                            />
                         </div>
                     </div>
                 </div>

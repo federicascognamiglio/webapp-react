@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReviewCard from "../components/ReviewCard";
+import ReviewForm from "../components/ReviewForm";
 
 function SingleMoviePage() {
     const url = import.meta.env.VITE_URL;
@@ -22,15 +23,20 @@ function SingleMoviePage() {
                 <div className="d-flex gap-4">
                     <img src={`${url}/${curMovie.image}`} className="card-img-top w-25 pb-5" alt={`Movie cover of ${curMovie.title}`} />
                     <div>
-                        <h5 className="card-title">{curMovie.title}</h5>
-                        <h6 className="card-text">{`Directed by: ${curMovie.director}`}</h6>
+                        <div className="d-flex align-items-center">
+                        <h5 className="card-title me-3">{curMovie.title}</h5>
+                        <span className="badge text-bg-secondary">{curMovie.genre}</span>
+                        </div>
+                        <h6 className="card-text pt-2">{`Directed by: ${curMovie.director}`}</h6>
                         <p className="card-text">{`Released in: ${curMovie.release_year}`}</p>
-                        <span className="badge text-bg-primary mb-3">{curMovie.genre}</span>
                         <p className="card-text">{curMovie.abstract}</p>
+                        <div>
+                            <ReviewForm />
+                        </div>
                     </div>
                 </div>
                 <div className="row">
-                {curMovie.reviews.map(curReview => <div className="col-4" key={curReview.id}><ReviewCard review={curReview} /></div>)}
+                    {curMovie.reviews.map(curReview => <div className="col-4" key={curReview.id}><ReviewCard review={curReview} /></div>)}
                 </div>
             </main>)
             )

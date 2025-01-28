@@ -14,60 +14,61 @@ const initialFormData = {
 function SingleMoviePage() {
     const url = import.meta.env.VITE_URL;
     const { id } = useParams();
-    const [movie, setMovie] = useState([]);
+    const [movie, setMovie] = useState(null);
     // Form data state
     const [formData, setFormData] = useState(initialFormData);
 
     const getMovie = () => {
+
         axios.get(`${url}/movies/${id}`).then((resp) => {
-            setMovie(resp.data.data)
+            setMovie(resp.data.data[0])
         })
     }
 
     // Get Movie
     useEffect(() => {
-       getMovie()
+        getMovie()
     }, [])
 
     // Send newData to DB on form submit
-    const storeReview = (formData) => {
-        axios.post(`${url}/movies/${movie.id}/reviews`, formData).then(resp => {
-            setFormData(initialValues)
+    const storeReview = (newData) => {
+        axios.post(`${url}/movies/${id}/reviews`, newData).then(resp => {
+            setFormData(initialFormData)
             getMovie()
         })
     }
- 
+
 
     return (
         <>
-            {movie.map(curMovie =>
-            (<main key={curMovie.id} className="container">
-                <h1 className="text-center mt-5 mb-3">{curMovie.title}</h1>
-                <div className="d-flex gap-4">
-                    <img src={`${url}/${curMovie.image}`} className="card-img-top w-25 pb-5" alt={`Movie cover of ${curMovie.title}`} />
-                    <div>
-                        <div className="d-flex align-items-center">
-                        <h5 className="card-title me-3">{curMovie.title}</h5>
-                        <span className="badge text-bg-secondary">{curMovie.genre}</span>
-                        </div>
-                        <h6 className="card-text pt-2">{`Directed by: ${curMovie.director}`}</h6>
-                        <p className="card-text">{`Released in: ${curMovie.release_year}`}</p>
-                        <p className="card-text">{curMovie.abstract}</p>
+            {movie &&
+                (<main key={movie.id} className="container">
+                    <h1 className="text-center mt-5 mb-3">{movie.title}</h1>
+                    <div className="d-flex gap-4">
+                        <img src={`${url}/${movie.image}`} className="card-img-top w-25 pb-5" alt={`Movie cover of ${movie.title}`} />
                         <div>
-                            <ReviewForm 
-                            data={formData}
-                            setData={setFormData}
-                            sendSubmit={storeReview}
-                            />
+                            <div className="d-flex align-items-center">
+                                <h5 className="card-title me-3">{movie.title}</h5>
+                                <span className="badge text-bg-secondary">{movie.genre}</span>
+                            </div>
+                            <h6 className="card-text pt-2">{`Directed by: ${movie.director}`}</h6>
+                            <p className="card-text">{`Released in: ${movie.release_year}`}</p>
+                            <p className="card-text">{movie.abstract}</p>
+                            <div>
+                                <ReviewForm
+                                    data={formData}
+                                    setData={setFormData}
+                                    sendSubmit={storeReview}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="row">
-                    {curMovie.reviews.map(curReview => <div className="col-4" key={curReview.id}><ReviewCard review={curReview} /></div>)}
-                </div>
-            </main>)
-            )
+                    <div className="row">
+                        {movie.reviews.map(curReview => <div className="col-4" key={curReview.id}><ReviewCard review={curReview} /></div>)}
+                    </div>
+                </main>)
             }
+
         </>
     )
 }

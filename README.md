@@ -28,9 +28,8 @@
  - Implementare la ricerca libera che faccia riferimento al nome del film (coinvolge anche le modifiche in backend)
  - Implementare i filtri per genere e per anno di pubblicazione, dove si possa applicare un filtro alla volta oppure entrambi (coinvolge anche le modifiche in backend)
  - Curare l’aspetto estetico della vostra applicazione, quindi gestire le immagini, gestire lo stato di ricerca vuota e altri aspetti di UX
- - Inseriamo le validazioni sia lato backend che nel form di frontend
-
 
  ## Bonus completati
  - Impostare la struttura del lavoro in maniera da sfruttare la riutailizzabilità dei componenti React e le loro props!
  - usare lo slug al posto di id per richiedere i dettagli di un libro
+ - Inseriamo le validazioni sia lato backend che nel form di frontend

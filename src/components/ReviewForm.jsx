@@ -18,7 +18,7 @@ function ReviewForm({ data, setData, sendSubmit }) {
             data.name.length <= 3 ||
             data.vote < 0 ||
             data.vote > 5 ||
-            (data.text.length > 0 && data.length < 10)
+            (data.text.length > 0 && data.length < 5)
         ) {
             return false;
         } else {
@@ -30,7 +30,7 @@ function ReviewForm({ data, setData, sendSubmit }) {
     const handleSubmit = (event) => {
         event.preventDefault()
         setError(false);
-        if (!isDataValid) {
+        if (!isDataValid()) {
             setError(true);
         } else {
             sendSubmit(data)
@@ -42,15 +42,15 @@ function ReviewForm({ data, setData, sendSubmit }) {
             <h4>Add your Review</h4>
             <div className="mb-3">
                 <label htmlFor="nameInput" className="form-label">Name</label>
-                <input name="name" onChange={handleInputChange} type="text" className="form-control" id="nameInput" />
+                <input name="name" value={data.name} onChange={handleInputChange} type="text" className="form-control" id="nameInput" />
             </div>
             <div className="mb-3">
                 <label htmlFor="textInput" className="form-label">Text</label>
-                <textarea name="text" onChange={handleInputChange} className="form-control" id="textInput" />
+                <textarea name="text" value={data.text} onChange={handleInputChange} className="form-control" id="textInput" ></textarea>
             </div>
             <div className="mb-3">
                 <label htmlFor="vote">Rating</label>
-                <select name="vote" onChange={handleInputChange} className="form-select" id="vote">
+                <select name="vote" value={data.vote} onChange={handleInputChange} className="form-select" id="vote">
                     {votes.map(curVote => <option key={curVote} value={curVote}>{curVote}</option>)}
                 </select>
             </div>

@@ -8,7 +8,7 @@ function MovieCard({movie, baseUrl}) {
                     <h5 className="card-title">{movie.title}</h5>
                     <h6 className="card-text">{movie.director}</h6>
                     <p className="card-text">{movie.abstract}</p>
-                    <Link className="btn btn-warning" to={`/movies/${movie.id}`}>Details</Link>
+                    <Link className="btn btn-warning" to={`/movies/${movie.slug}`}>Details</Link>
                 </div>
         </div>
     )

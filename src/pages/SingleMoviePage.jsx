@@ -13,14 +13,14 @@ const initialFormData = {
 
 function SingleMoviePage() {
     const url = import.meta.env.VITE_URL;
-    const { id } = useParams();
+    const { slug } = useParams();
     const [movie, setMovie] = useState(null);
     // Form data state
     const [formData, setFormData] = useState(initialFormData);
 
     const getMovie = () => {
 
-        axios.get(`${url}/movies/${id}`).then((resp) => {
+        axios.get(`${url}/movies/${slug}`).then((resp) => {
             setMovie(resp.data.data[0])
         })
     }
@@ -32,7 +32,7 @@ function SingleMoviePage() {
 
     // Send newData to DB on form submit
     const storeReview = (newData) => {
-        axios.post(`${url}/movies/${id}/reviews`, newData).then(resp => {
+        axios.post(`${url}/movies/${movie.id}/reviews`, newData).then(resp => {
             setFormData(initialFormData)
             getMovie()
         })

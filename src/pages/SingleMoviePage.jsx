@@ -31,13 +31,12 @@ function SingleMoviePage() {
     }, [])
 
     // Send newData to DB on form submit
-    const storeReview = (newData) => {
-        axios.post(`${url}/movies/${movie.id}/reviews`, newData).then(resp => {
-            setFormData(initialFormData)
-            getMovie()
+    const storeReview = (data) => {
+        axios.post(`${url}/movies/${movie.id}/reviews`, data).then(resp => {
+            setFormData(initialFormData);
+            getMovie();
         })
     }
-
 
     return (
         <>
